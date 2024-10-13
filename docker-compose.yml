@@ -1,0 +1,15 @@
+﻿services:
+  ecommerce:
+    image: ecommerce
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+  postgres:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ecommerce
+    ports:
+      - '5432:5432'
