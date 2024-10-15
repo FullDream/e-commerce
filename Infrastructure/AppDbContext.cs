@@ -15,7 +15,7 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<Identity
 	{
 		base.OnModelCreating(modelBuilder);
 
-
+		// modelBuilder.ApplyConfiguration(new ProductAndProductTranslationConfiguration());
 		modelBuilder.Entity<Product>()
 			.HasMany(p => p.Images)
 			.WithMany();
