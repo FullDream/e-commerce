@@ -1,7 +1,10 @@
+using Api.Filters;
 using Api.Routing;
 using Application.Interfaces;
+using Application.Interfaces.Services;
+using Application.Services;
 using Infrastructure;
-using Infrastructure.Services;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
@@ -12,7 +15,11 @@ var services = builder.Services;
 services.AddEndpointsApiExplorer();
 services.AddDbInfrastructure(builder.Configuration);
 services.AddControllers(options =>
-	options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer())));
+{
+	options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer()));
+	options.Filters.Add<ApiExceptionFilter>();
+});
+
 services.AddAuthorization();
 services.AddSwaggerGen();
 
@@ -21,6 +28,7 @@ services.AddIdentityApiEndpoints<IdentityUser>()
 	.AddEntityFrameworkStores<AppDbContext>();
 
 services.AddScoped<IProductService, ProductService>();
+services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 

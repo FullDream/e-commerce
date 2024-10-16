@@ -19,5 +19,9 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<Identity
 		modelBuilder.Entity<Product>()
 			.HasMany(p => p.Images)
 			.WithMany();
+
+		modelBuilder.Entity<Product>()
+			.HasIndex(p => p.Slug)
+			.IsUnique();
 	}
 }
