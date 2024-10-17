@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Infrastructure.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,13 +16,8 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<Identity
 	{
 		base.OnModelCreating(modelBuilder);
 
-		// modelBuilder.ApplyConfiguration(new ProductAndProductTranslationConfiguration());
-		modelBuilder.Entity<Product>()
-			.HasMany(p => p.Images)
-			.WithMany();
-
-		modelBuilder.Entity<Product>()
-			.HasIndex(p => p.Slug)
-			.IsUnique();
+		modelBuilder.ApplyConfiguration(new ProductConfiguration());
+		modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+		modelBuilder.ApplyConfiguration(new ImageConfiguration());
 	}
 }
