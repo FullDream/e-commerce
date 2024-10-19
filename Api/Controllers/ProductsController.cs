@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using Application.Dto;
-using Application.Interfaces;
+﻿using Application.Dto;
 using Application.Interfaces.Services;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +32,15 @@ public class ProductsController(IProductService service) : ControllerBase
 	[HttpPatch("{slug}")]
 	public async Task<IActionResult> UpdateProduct(string slug, [FromBody] UpdateProductDto productDto)
 	{
-		var product =  await service.UpdateAsync(slug, productDto);
+		var product = await service.UpdateAsync(slug, productDto);
+
+		return Ok(product);
+	}
+
+	[HttpDelete("{slug}")]
+	public async Task<IActionResult> DeleteProduct(string slug)
+	{
+		var product = await service.DeleteAsync(slug);
 
 		return Ok(product);
 	}
