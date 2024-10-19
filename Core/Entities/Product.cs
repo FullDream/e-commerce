@@ -10,10 +10,4 @@ public class Product
 	public ICollection<Image> Images { get; init; } = new List<Image>();
 	public ICollection<Category> Categories { get; init; } = new List<Category>();
 
-	public Product(string slug, string title, string description)
-	{
-		this.Slug = slug;
-		this.Title = title;
-		this.Description = description;
-	}
 }
