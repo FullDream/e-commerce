@@ -9,9 +9,16 @@ public static class InfrastructureServiceRegistration
 	public static IServiceCollection AddDbInfrastructure(this IServiceCollection services,
 		IConfiguration configuration)
 	{
+
 		services.AddDbContext<AppDbContext>(options =>
 			options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
+		return services;
+	}
+
+	public static IServiceCollection AddMappingInfrastructure(this IServiceCollection services)
+	{
+		services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 		return services;
 	}
 }
