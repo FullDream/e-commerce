@@ -1,4 +1,5 @@
-﻿using Application.Dto;
+﻿using System.Text.Json;
+using Application.Dto;
 using Application.Interfaces;
 using Application.Interfaces.Services;
 using Core.Entities;
@@ -28,5 +29,13 @@ public class ProductsController(IProductService service) : ControllerBase
 	{
 		var createdProduct = await service.CreateAsync(productDto);
 		return CreatedAtAction(nameof(CreateProduct), new { id = createdProduct.Id }, createdProduct);
+	}
+
+	[HttpPatch("{slug}")]
+	public async Task<IActionResult> UpdateProduct(string slug, [FromBody] UpdateProductDto productDto)
+	{
+		var product =  await service.UpdateAsync(slug, productDto);
+
+		return Ok(product);
 	}
 }

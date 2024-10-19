@@ -14,6 +14,7 @@ var services = builder.Services;
 
 services.AddEndpointsApiExplorer();
 services.AddDbInfrastructure(builder.Configuration);
+services.AddMappingInfrastructure();
 services.AddControllers(options =>
 {
 	options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer()));
