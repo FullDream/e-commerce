@@ -1,12 +1,13 @@
 ﻿using Application.Dto;
 using Application.Interfaces;
 using Application.Interfaces.Services;
+using AutoMapper;
 using Core.Entities;
 using Core.Exceptions;
 
 namespace Application.Services;
 
-public class ProductService(IProductRepository productRepository) : IProductService
+public class ProductService(IProductRepository productRepository, IMapper mapper) : IProductService
 {
 	public Task<List<Product>> FindAllAsync()
 	{
@@ -15,24 +16,24 @@ public class ProductService(IProductRepository productRepository) : IProductServ
 
 	public async Task<Product> FindBySlugAsync(string slug)
 	{
-		var product = await productRepository.FindBySlugAsync(slug);
-
-		if (product != null) return product;
-
-		throw new EntityNotFoundException(nameof(Product), slug);
+		return await productRepository.FindBySlugAsync(slug) ??
+		       throw new EntityNotFoundException(nameof(Product), slug);
 	}
 
 	public Task<Product> CreateAsync(CreateProductDto createDto)
 	{
-		Product product = new(createDto.Slug, createDto.Title, createDto.Description);
-
+		var product = mapper.Map<Product>(createDto);
 
 		return productRepository.CreateAsync(product);
 	}
 
-	public Task<Product> UpdateAsync(Product product)
+	public async Task<Product> UpdateAsync(string slug, UpdateProductDto updateDto)
 	{
-		return productRepository.UpdateAsync(product);
+		var product = await productRepository.FindBySlugAsync(slug)
+		              ?? throw new EntityNotFoundException(nameof(Product), slug);
+
+		mapper.Map(updateDto, product);
+		return await productRepository.UpdateAsync(product);
 	}
 
 	public Task<Product> DeleteAsync(Product product)

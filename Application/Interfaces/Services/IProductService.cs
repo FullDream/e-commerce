@@ -4,4 +4,4 @@ using Core.Entities;
 
 namespace Application.Interfaces.Services;
 
-public interface IProductService : IEntityService<Product, CreateProductDto>;
+public interface IProductService : IEntityService<Product, CreateProductDto, UpdateProductDto>;

@@ -5,7 +5,7 @@ namespace Application.Dto;
 public class CreateProductDto
 {
 	[Required]
-	public required string Slug { get; init; } = null!;
+	public string Slug { get; init; } = null!;
 
 	[Required]
 	public string Title { get; init; } = null!;

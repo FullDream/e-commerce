@@ -4,4 +4,4 @@ using Core.Entities;
 
 namespace Application.Interfaces.Services;
 
-public interface ICategoryService: IEntityService<Category, CreateProductDto>;
+public interface ICategoryService: IEntityService<Category, CreateProductDto, UpdateProductDto>;
