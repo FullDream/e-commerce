@@ -36,8 +36,13 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
 		return await productRepository.UpdateAsync(product);
 	}
 
-	public Task<Product> DeleteAsync(Product product)
+	public async Task<Product> DeleteAsync(string slug)
 	{
-		return productRepository.DeleteAsync(product);
+		var product = await productRepository.FindBySlugAsync(slug);
+
+		if (product == null) throw new EntityNotFoundException(nameof(Product), slug);
+
+		return await productRepository.DeleteAsync(product);
+
 	}
 }

@@ -6,5 +6,5 @@ public interface IEntityService<T, in TC, in TU>
 	Task<T> FindBySlugAsync(string slug);
 	Task<T> CreateAsync(TC createDto);
 	Task<T> UpdateAsync(string slug, TU updateDto);
-	Task<T> DeleteAsync(T product);
+	Task<T> DeleteAsync(string slug);
 }
