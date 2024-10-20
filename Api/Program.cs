@@ -1,6 +1,6 @@
-using Api.Filters;
+using System.Text.Json;
 using Api.Routing;
-using Application.Interfaces;
+using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Application.Services;
 using Infrastructure;
@@ -16,10 +16,14 @@ services.AddEndpointsApiExplorer();
 services.AddDbInfrastructure(builder.Configuration);
 services.AddMappingInfrastructure();
 services.AddControllers(options =>
-{
-	options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer()));
-	options.Filters.Add<ApiExceptionFilter>();
-});
+	{
+		options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer()));
+	})
+	.AddJsonOptions(options =>
+	{
+		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+		options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+	});
 
 services.AddAuthorization();
 services.AddSwaggerGen();
@@ -28,8 +32,11 @@ services.AddSwaggerGen();
 services.AddIdentityApiEndpoints<IdentityUser>()
 	.AddEntityFrameworkStores<AppDbContext>();
 
-services.AddScoped<IProductService, ProductService>();
 services.AddScoped<IProductRepository, ProductRepository>();
+services.AddScoped<IProductService, ProductService>();
+
+services.AddScoped<ICategoryRepository, CategoryRepository>();
+services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 
