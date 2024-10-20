@@ -13,6 +13,6 @@ public class CreateProductDto
 	[Required]
 	public string Description { get; init; } = null!;
 
-	public ICollection<Guid>? Images { get; init; }
-	public ICollection<Guid>? Categories { get; init; }
+	public IEnumerable<Guid>? Images { get; init; }
+	public IEnumerable<Guid>? Categories { get; init; }
 }

@@ -6,6 +6,6 @@ public class UpdateProductDto
 	public string? Title { get; init; }
 	public string? Description { get; init; }
 
-	public ICollection<Guid>? Images { get; init; }
-	public ICollection<Guid>? Categories { get; init; }
+	public IEnumerable<Guid>? Images { get; init; }
+	public IEnumerable<Guid>? Categories { get; init; }
 }

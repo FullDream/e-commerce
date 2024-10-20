@@ -7,5 +7,5 @@ public class UpdateCategoryDto
 	public string? Description { get; init; }
 	public string? Icon { get; init; }
 
-	public ICollection<Guid>? Products { get; init; } = new List<Guid>();
+	public IEnumerable<Guid>? Products { get; init; }
 }
