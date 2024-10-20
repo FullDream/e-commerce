@@ -11,7 +11,7 @@ public class ProductRepository(AppDbContext context) : IProductRepository
 		return context.Products.ToListAsync();
 	}
 
-	public Task<List<Product>> FindByIdsAsync(List<Guid> ids)
+	public Task<List<Product>> FindByIdsAsync(IEnumerable<Guid> ids)
 	{
 		return context.Products.Where(p => ids.Contains(p.Id)).ToListAsync();
 	}

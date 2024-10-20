@@ -11,7 +11,7 @@ public class CategoryRepository(AppDbContext context) : ICategoryRepository
 		return context.Categories.ToListAsync();
 	}
 
-	public Task<List<Category>> FindByIdsAsync(List<Guid> ids)
+	public Task<List<Category>> FindByIdsAsync(IEnumerable<Guid> ids)
 	{
 		return context.Categories.Where(category => ids.Contains(category.Id)).ToListAsync();
 	}
