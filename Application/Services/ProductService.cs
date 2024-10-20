@@ -1,5 +1,5 @@
 ﻿using Application.Dto;
-using Application.Interfaces;
+using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using AutoMapper;
 using Core.Entities;
@@ -43,6 +43,5 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
 		if (product == null) throw new EntityNotFoundException(nameof(Product), slug);
 
 		return await productRepository.DeleteAsync(product);
-
 	}
 }

@@ -3,4 +3,4 @@ using Core.Entities;
 
 namespace Application.Interfaces.Repositories;
 
-public interface IProductRepository : IEntityRepository<Product>;
+public interface ICategoryRepository : IEntityRepository<Category>;
