@@ -8,7 +8,7 @@ public class ProductRepository(AppDbContext context) : IProductRepository
 {
 	public Task<List<Product>> FindAllAsync()
 	{
-		return context.Products.ToListAsync();
+		return context.Products.AsNoTracking().Include(p => p.Categories).ToListAsync();
 	}
 
 	public Task<List<Product>> FindByIdsAsync(IEnumerable<Guid> ids)

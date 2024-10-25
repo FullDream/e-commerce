@@ -8,5 +8,5 @@ public class Category
 	public required string Description { get; init; }
 	public required string Icon { get; init; }
 
-	public ICollection<Product> Products { get; init; } = new List<Product>();
+	public ICollection<Product> Products { get; set; } = new List<Product>();
 }

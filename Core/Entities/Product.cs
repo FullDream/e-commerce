@@ -8,6 +8,5 @@ public class Product
 	public string Description { get; init; }
 
 	public ICollection<Image> Images { get; init; } = new List<Image>();
-	public ICollection<Category> Categories { get; init; } = new List<Category>();
-
+	public ICollection<Category> Categories { get; set; } = new List<Category>();
 }

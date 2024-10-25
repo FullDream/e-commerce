@@ -1,6 +1,5 @@
 ﻿using Application.Dto;
 using Application.Interfaces.Services;
-using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -10,7 +9,7 @@ namespace Api.Controllers;
 public class CategoriesController(ICategoryService service) : ControllerBase
 {
 	[HttpGet]
-	public Task<List<Category>> Index()
+	public Task<List<CategoryDto>> Index()
 	{
 		return service.FindAllAsync();
 	}

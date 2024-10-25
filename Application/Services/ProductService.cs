@@ -7,41 +7,69 @@ using Core.Exceptions;
 
 namespace Application.Services;
 
-public class ProductService(IProductRepository productRepository, IMapper mapper) : IProductService
+public class ProductService(
+	IMapper mapper,
+	IProductRepository productRepository,
+	ICategoryRepository categoryRepository) : IProductService
 {
-	public Task<List<Product>> FindAllAsync()
+	public async Task<List<ProductDto>> FindAllAsync()
 	{
-		return productRepository.FindAllAsync();
+		var products = await productRepository.FindAllAsync();
+
+		return mapper.Map<List<ProductDto>>(products);
 	}
 
-	public async Task<Product> FindBySlugAsync(string slug)
+	public async Task<ProductDto> FindBySlugAsync(string slug)
 	{
-		return await productRepository.FindBySlugAsync(slug) ??
-		       throw new EntityNotFoundException(nameof(Product), slug);
+		var product = await productRepository.FindBySlugAsync(slug);
+
+		if (product == null)
+			throw new EntityNotFoundException(nameof(Product), slug);
+
+		return mapper.Map<ProductDto>(product);
 	}
 
-	public Task<Product> CreateAsync(CreateProductDto createDto)
+	public async Task<ProductDto> CreateAsync(CreateProductDto createDto)
 	{
 		var product = mapper.Map<Product>(createDto);
 
-		return productRepository.CreateAsync(product);
+		var createdProduct = await productRepository.CreateAsync(product);
+
+		return mapper.Map<ProductDto>(createdProduct);
 	}
 
-	public async Task<Product> UpdateAsync(string slug, UpdateProductDto updateDto)
+	public async Task<ProductDto> UpdateAsync(string slug, UpdateProductDto updateDto)
 	{
 		var product = await productRepository.FindBySlugAsync(slug)
 		              ?? throw new EntityNotFoundException(nameof(Product), slug);
 
 		mapper.Map(updateDto, product);
-		return await productRepository.UpdateAsync(product);
+
+		if (updateDto.Categories is not null)
+		{
+			var categories = await categoryRepository.FindByIdsAsync(updateDto.Categories);
+
+			if (categories.Count != updateDto.Categories.Count())
+			{
+				throw new EntityNotFoundException(nameof(Category), "One or more categories not found.");
+			}
+
+			product.Categories = categories.ToList();
+		}
+
+		var updatedProduct = await productRepository.UpdateAsync(product);
+
+		return mapper.Map<ProductDto>(updatedProduct);
 	}
 
-	public async Task<Product> DeleteAsync(string slug)
+	public async Task<ProductDto> DeleteAsync(string slug)
 	{
 		var product = await productRepository.FindBySlugAsync(slug);
 
 		if (product == null) throw new EntityNotFoundException(nameof(Product), slug);
 
-		return await productRepository.DeleteAsync(product);
+		var deletedProduct = await productRepository.DeleteAsync(product);
+
+		return mapper.Map<ProductDto>(deletedProduct);
 	}
 }

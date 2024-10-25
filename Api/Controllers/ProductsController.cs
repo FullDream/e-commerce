@@ -1,6 +1,5 @@
 ﻿using Application.Dto;
 using Application.Interfaces.Services;
-using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -10,7 +9,7 @@ namespace Api.Controllers;
 public class ProductsController(IProductService service) : ControllerBase
 {
 	[HttpGet]
-	public Task<List<Product>> Index()
+	public Task<List<ProductDto>> Index()
 	{
 		return service.FindAllAsync();
 	}
