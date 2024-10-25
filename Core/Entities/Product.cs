@@ -1,6 +1,6 @@
 ﻿namespace Core.Entities;
 
-public class Product
+public class Product : IEntity
 {
 	public Guid Id { get; init; }
 	public string Slug { get; init; }

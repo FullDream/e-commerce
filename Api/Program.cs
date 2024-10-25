@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Api.Routing;
+using Application.Interfaces.Common;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Application.Services;
@@ -37,6 +38,8 @@ services.AddScoped<IProductService, ProductService>();
 
 services.AddScoped<ICategoryRepository, CategoryRepository>();
 services.AddScoped<ICategoryService, CategoryService>();
+
+services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
 
