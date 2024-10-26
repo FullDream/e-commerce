@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.Dto;
+namespace Application.Product.Dto;
 
-public class CreateProductDto
+public class CreateProductRequest
 {
 	[Required]
 	public string Slug { get; init; } = null!;

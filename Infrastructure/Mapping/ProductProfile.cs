@@ -1,4 +1,4 @@
-﻿using Application.Dto;
+﻿using Application.Product.Dto;
 using AutoMapper;
 using Core.Entities;
 
@@ -8,10 +8,10 @@ public class ProductProfile : Profile
 {
 	public ProductProfile()
 	{
-		CreateMap<Product, ProductDto>().ForMember(dest => dest.Categories,
+		CreateMap<Product, ProductResponse>().ForMember(dest => dest.Categories,
 			opt => opt.MapFrom(src => src.Categories.Select(c => c.Id)));
-		CreateMap<CreateProductDto, Product>();
-		CreateMap<UpdateProductDto, Product>()
+		CreateMap<CreateProductRequest, Product>();
+		CreateMap<UpdateProductRequest, Product>()
 			.ForMember(dest => dest.Categories, opt => opt.Ignore())
 			.ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 	}

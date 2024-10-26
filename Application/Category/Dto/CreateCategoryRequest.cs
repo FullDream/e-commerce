@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.Dto;
+namespace Application.Category.Dto;
 
-public class CreateCategoryDto
+public class CreateCategoryRequest
 {
 	[Required]
 	public string Name { get; init; } = null!;
@@ -16,5 +16,5 @@ public class CreateCategoryDto
 	[Required]
 	public string Icon { get; init; } = null!;
 
-	public IEnumerable<Guid>? Products { get; init; }
+	public IReadOnlyCollection<Guid>? Products { get; init; }
 }

@@ -1,9 +1,7 @@
 using System.Text.Json;
 using Api.Routing;
+using Application;
 using Application.Interfaces.Common;
-using Application.Interfaces.Repositories;
-using Application.Interfaces.Services;
-using Application.Services;
 using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +14,11 @@ var services = builder.Services;
 services.AddEndpointsApiExplorer();
 services.AddDbInfrastructure(builder.Configuration);
 services.AddMappingInfrastructure();
+
+services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+services.AddApplication();
+
 services.AddControllers(options =>
 	{
 		options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer()));
@@ -33,13 +36,6 @@ services.AddSwaggerGen();
 services.AddIdentityApiEndpoints<IdentityUser>()
 	.AddEntityFrameworkStores<AppDbContext>();
 
-services.AddScoped<IProductRepository, ProductRepository>();
-services.AddScoped<IProductService, ProductService>();
-
-services.AddScoped<ICategoryRepository, CategoryRepository>();
-services.AddScoped<ICategoryService, CategoryService>();
-
-services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
 

@@ -1,46 +1,53 @@
-﻿using Application.Dto;
-using Application.Interfaces.Services;
+﻿using Application.Common.Commands;
+using Application.Common.Queries;
+using Application.Product.Dto;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class ProductsController(IProductService service) : ControllerBase
+public class ProductsController(IMediator mediator) : ControllerBase
 {
 	[HttpGet]
-	public Task<List<ProductDto>> Index()
+	public async Task<IActionResult> Index(CancellationToken cancellationToken)
 	{
-		return service.FindAllAsync();
+		var products = await mediator.Send(new FindAllQuery<ProductResponse>(), cancellationToken);
+		return Ok(products);
 	}
 
 	[HttpGet("{slug}")]
-	public async Task<IActionResult> GetProductBySlug(string slug)
+	public async Task<IActionResult> FindOne(string slug, CancellationToken cancellationToken)
 	{
-		var product = await service.FindBySlugAsync(slug);
+		var product = await mediator.Send(new FindOneQuery<ProductResponse>(slug), cancellationToken);
 		return Ok(product);
 	}
 
 	[HttpPost]
-	public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto productDto)
+	public async Task<IActionResult> Create(
+		[FromBody] CreateCommand<CreateProductRequest, ProductResponse> productRequest,
+		CancellationToken cancellationToken)
 	{
-		var createdProduct = await service.CreateAsync(productDto);
-		return CreatedAtAction(nameof(CreateProduct), new { id = createdProduct.Id }, createdProduct);
+		var product = await mediator.Send(productRequest, cancellationToken);
+		return CreatedAtAction(nameof(Create), new { id = product.Id }, product);
 	}
 
 	[HttpPatch("{slug}")]
-	public async Task<IActionResult> UpdateProduct(string slug, [FromBody] UpdateProductDto productDto)
+	public async Task<IActionResult> Update(string slug,
+		[FromBody] UpdateCommand<UpdateProductRequest, ProductResponse> productRequest,
+		CancellationToken cancellationToken)
 	{
-		var product = await service.UpdateAsync(slug, productDto);
+		var product = await mediator.Send(productRequest, cancellationToken);
 
 		return Ok(product);
 	}
 
 	[HttpDelete("{slug}")]
-	public async Task<IActionResult> DeleteProduct(string slug)
+	public async Task<IActionResult> Delete(string slug, CancellationToken cancellationToken)
 	{
-		var product = await service.DeleteAsync(slug);
+		var category = await mediator.Send(new DeleteCommand<ProductResponse>(slug), cancellationToken);
 
-		return Ok(product);
+		return Ok(category);
 	}
 }

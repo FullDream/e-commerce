@@ -1,6 +1,6 @@
-﻿namespace Application.Dto;
+﻿namespace Application.Product.Dto;
 
-public class UpdateProductDto
+public class UpdateProductRequest
 {
 	public string? Slug { get; init; }
 	public string? Title { get; init; }

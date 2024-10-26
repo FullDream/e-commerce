@@ -1,14 +1,14 @@
-﻿using Core;
+﻿using Core.Interfaces;
 
 namespace Application.Interfaces.Common;
 
 public interface IRepository<TEntity> where TEntity : IEntity
 {
-	Task<List<TEntity>> FindAllAsync();
+	Task<List<TEntity>> FindAllAsync(CancellationToken cancellationToken);
 	Task<List<TEntity>> FindByIdsAsync(IEnumerable<Guid> ids);
-	ValueTask<TEntity?> FindAsync(Guid id);
-	Task<TEntity?> FindAsync(string slug);
-	Task<TEntity> CreateAsync(TEntity entity);
-	Task<TEntity> UpdateAsync(TEntity entity);
-	Task<TEntity> DeleteAsync(TEntity entity);
+	ValueTask<TEntity?> FindAsync(object[] id, CancellationToken cancellationToken);
+	Task<TEntity?> FindAsync(string slug, CancellationToken cancellationToken);
+	Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken);
+	Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken);
+	Task<TEntity> DeleteAsync(TEntity entity, CancellationToken cancellationToken);
 }
