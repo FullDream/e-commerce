@@ -1,5 +1,4 @@
-﻿using Application.Interfaces.Common;
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;

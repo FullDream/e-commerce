@@ -11,9 +11,10 @@ namespace Api.Controllers;
 public class CategoriesController(IMediator mediator) : ControllerBase
 {
 	[HttpGet]
-	public async Task<IActionResult> Index(CancellationToken cancellationToken)
+	public async Task<IActionResult> Index([FromQuery] List<string> select, CancellationToken cancellationToken)
 	{
-		var categories = await mediator.Send(new FindAllQuery<CategoryResponse>(), cancellationToken);
+		var categories = await mediator.Send(new FindAllQuery<CategoryResponse>(select), cancellationToken);
+
 		return Ok(categories);
 	}
 

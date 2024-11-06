@@ -11,9 +11,9 @@ namespace Api.Controllers;
 public class ProductsController(IMediator mediator) : ControllerBase
 {
 	[HttpGet]
-	public async Task<IActionResult> Index(CancellationToken cancellationToken)
+	public async Task<IActionResult> Index([FromQuery] List<string> select, CancellationToken cancellationToken)
 	{
-		var products = await mediator.Send(new FindAllQuery<ProductResponse>(), cancellationToken);
+		var products = await mediator.Send(new FindAllQuery<ProductResponse>(select), cancellationToken);
 		return Ok(products);
 	}
 

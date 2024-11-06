@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Api.Routing;
 using Application;
-using Application.Interfaces.Common;
+using Core.Interfaces;
 using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;

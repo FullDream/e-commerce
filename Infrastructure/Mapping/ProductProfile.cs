@@ -8,8 +8,8 @@ public class ProductProfile : Profile
 {
 	public ProductProfile()
 	{
-		CreateMap<Product, ProductResponse>().ForMember(dest => dest.Categories,
-			opt => opt.MapFrom(src => src.Categories.Select(c => c.Id)));
+		CreateMap<Product, ProductResponse>();
+		CreateMap<Product, BaseProduct>();
 		CreateMap<CreateProductRequest, Product>();
 		CreateMap<UpdateProductRequest, Product>()
 			.ForMember(dest => dest.Categories, opt => opt.Ignore())

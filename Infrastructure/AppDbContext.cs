@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Application;
+using Core.Entities;
 using Infrastructure.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
 
-public class AppDbContext(DbContextOptions options) : IdentityDbContext<IdentityUser>(options)
+public class AppDbContext(DbContextOptions options) : IdentityDbContext<IdentityUser>(options), IApplicationDbContext
 {
 	public DbSet<Product> Products { get; init; }
 	public DbSet<Category> Categories { get; init; }

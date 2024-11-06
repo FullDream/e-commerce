@@ -4,5 +4,5 @@ namespace Application.Product.Dto;
 
 public class ProductResponse : BaseProduct
 {
-	public IReadOnlyCollection<BaseCategory> Categories { get; init; } = [];
+	public IReadOnlyCollection<BaseCategory>? Categories { get; init; }
 }

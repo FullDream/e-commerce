@@ -1,6 +1,4 @@
-﻿using Core.Interfaces;
-
-namespace Application.Interfaces.Common;
+﻿namespace Core.Interfaces;
 
 public interface IRepository<TEntity> where TEntity : IEntity
 {

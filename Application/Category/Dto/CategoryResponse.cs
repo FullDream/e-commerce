@@ -4,5 +4,5 @@ namespace Application.Category.Dto;
 
 public class CategoryResponse : BaseCategory
 {
-	public IReadOnlyCollection<BaseProduct> Products { get; init; } = new List<BaseProduct>();
+	public IReadOnlyCollection<BaseProduct>? Products { get; init; }
 }

@@ -1,5 +1,4 @@
-﻿using Application.Interfaces.Common;
-using AutoMapper;
+﻿using AutoMapper;
 using Core.Exceptions;
 using Core.Interfaces;
 using MediatR;
