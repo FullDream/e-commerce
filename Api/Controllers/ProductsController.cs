@@ -8,12 +8,16 @@ namespace Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class ProductsController(IMediator mediator) : ControllerBase
+public class ProductsController(IMediator mediator, TypeInspector<ProductResponse> typeInspector) : ControllerBase
 {
 	[HttpGet]
-	public async Task<IActionResult> Index([FromQuery] List<string> select, CancellationToken cancellationToken)
+	public async Task<IActionResult> Index([FromQuery] string[] select, [FromQuery] string[] include,
+		[FromQuery] string[] sort,
+		CancellationToken cancellationToken)
 	{
-		var products = await mediator.Send(new FindAllQuery<ProductResponse>(select), cancellationToken);
+		var sorting = FilterQuery.GetSort<ProductResponse>(sort);
+		var products =
+			await mediator.Send(new FindAllQuery<ProductResponse>(select, include, sorting), cancellationToken);
 		return Ok(products);
 	}
 

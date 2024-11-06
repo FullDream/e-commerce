@@ -8,12 +8,19 @@ namespace Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class CategoriesController(IMediator mediator) : ControllerBase
+public class CategoriesController(IMediator mediator, TypeInspector<CategoryResponse> typeInspector) : ControllerBase
 {
 	[HttpGet]
-	public async Task<IActionResult> Index([FromQuery] List<string> select, CancellationToken cancellationToken)
+	public async Task<IActionResult>
+		Index([FromQuery] string[] select,
+			[FromQuery] string[] include,
+			[FromQuery] string[] sort,
+			CancellationToken cancellationToken)
 	{
-		var categories = await mediator.Send(new FindAllQuery<CategoryResponse>(select), cancellationToken);
+		var sorting = FilterQuery.GetSort<CategoryResponse>(sort);
+
+		var categories = await mediator.Send(new FindAllQuery<CategoryResponse>(select, include, sorting),
+			cancellationToken);
 
 		return Ok(categories);
 	}

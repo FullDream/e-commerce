@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Api;
 using Api.Routing;
 using Application;
 using Core.Interfaces;
@@ -15,6 +16,7 @@ services.AddEndpointsApiExplorer();
 services.AddDbInfrastructure(builder.Configuration);
 services.AddMappingInfrastructure();
 
+services.AddSingleton(typeof(TypeInspector<>));
 services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 services.AddApplication();
