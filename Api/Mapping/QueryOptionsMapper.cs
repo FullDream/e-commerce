@@ -34,5 +34,5 @@ public class QueryOptionsMapper<T>(TypeInspector<T> inspector) : IQueryOptionsMa
 		sortParams
 			.Select(param => param.Split(':'))
 			.ToDictionary(parts => target.First(k => k.Equals(parts[0], StringComparison.OrdinalIgnoreCase)),
-				parts => Enum.Parse<SortOrder>(parts[1]));
+				parts => Enum.Parse<SortOrder>(parts[1], ignoreCase: true));
 }

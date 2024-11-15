@@ -12,34 +12,49 @@ namespace Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class ProductsController(IMediator mediator, IQueryOptionsValidator<ProductResponse> queryOptionsValidator)
-	: ControllerBase
+public class ProductsController(
+	IMediator mediator,
+	IQueryOptionsValidator<ProductResponse> queryValidator,
+	IQueryOptionsMapper<ProductResponse> queryMapper
+) : ControllerBase
 {
 	[HttpGet]
 	public async Task<IActionResult>
 		Index(ListQueryOptions<ProductResponse> options,
 			CancellationToken cancellationToken)
 	{
-		var categories = await mediator.Send(
-			new FindAllQuery<ProductResponse>(new ListQueryCriteria { Include = [], Select = [], Sort = [] }),
-			cancellationToken);
+		var criteria = queryMapper.Map(options);
+		var categories = await mediator.Send(new FindAllQuery<ProductResponse>(criteria), cancellationToken);
 
 		return Ok(categories);
 	}
 
 	[HttpGet("{slug}")]
-	public async Task<IActionResult> FindOne(string slug,
+	public async Task<IActionResult> FindOne(
+		string slug,
 		[FromQuery] QueryOptions<ProductResponse> options,
-		[FromServices] IQueryOptionsMapper<ProductResponse> mapper,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken
+	)
 	{
-		var validationResult = await queryOptionsValidator.ValidateAsync(options, cancellationToken);
+		var validationResult = await queryValidator.ValidateAsync(options, cancellationToken);
 
 		if (!validationResult.IsValid)
 			return BadRequest(validationResult.Errors);
 
-		QueryCriteria criteria = mapper.Map(options);
+		QueryCriteria criteria = queryMapper.Map(options);
 		var product = await mediator.Send(new FindOneBySlugQuery<ProductResponse>(slug, criteria), cancellationToken);
+		return Ok(product);
+	}
+
+	[HttpGet("{id:guid}")]
+	public async Task<IActionResult> FindOne(
+		Guid id,
+		[FromQuery] QueryOptions<ProductResponse> options,
+		CancellationToken cancellationToken
+	)
+	{
+		QueryCriteria criteria = queryMapper.Map(options);
+		var product = await mediator.Send(new FindOneByIdQuery<ProductResponse>(id, criteria), cancellationToken);
 		return Ok(product);
 	}
 

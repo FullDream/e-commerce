@@ -6,7 +6,7 @@ namespace Api.QueryParams;
 public class ListQueryOptions<T> : QueryOptions<T>
 {
 	[FromQuery(Name = "sort")]
-	public IEnumerable<string> Sort { get; init; } = [];
+	public IEnumerable<string> Sort { get; init; } = new List<string>();
 
 	public static Dictionary<string, SortOrder> GetSort(string[] sortParams, string[] validProperties)
 	{

@@ -1,5 +1,6 @@
-﻿using MediatR;
+﻿using Application.Common.Criteria;
+using MediatR;
 
 namespace Application.Common.Queries;
 
-public record FindOneByIdQuery<TResult>(Guid Id) : IRequest<TResult>;
+public record FindOneByIdQuery<TResult>(Guid Id, QueryCriteria Criteria) : IRequest<TResult>;
