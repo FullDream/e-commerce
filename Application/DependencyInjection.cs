@@ -29,8 +29,10 @@ public static class DependencyInjection
 		return services
 			.AddScoped<IRequestHandler<FindAllQuery<TResponse>, List<TResponse>>,
 				FindAllQueryHandler<TEntity, TResponse>>()
-			.AddScoped<IRequestHandler<FindOneQuery<TResponse>, TResponse>,
-				FindOneQueryHandler<TEntity, TResponse>>();
+			.AddScoped<IRequestHandler<FindOneBySlugQuery<TResponse>, TResponse>,
+				FindOneBySlugQueryHandler<TEntity, TResponse>>()
+			.AddScoped<IRequestHandler<FindOneByIdQuery<TResponse>, TResponse>,
+				FindOneByIdQueryHandler<TEntity, TResponse>>();
 	}
 
 	private static IServiceCollection AddCommands<TEntity, TResponse, TCreate, TUpdate>(

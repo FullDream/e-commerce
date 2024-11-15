@@ -67,7 +67,7 @@ public static class QueryableExtensions
 	}
 
 	public static IQueryable<T> IncludeMany<T>(this IQueryable<T> source,
-		params string[] navigationProperties) where T : class
+		IEnumerable<string> navigationProperties) where T : class
 	{
 		return navigationProperties.Aggregate(source, (current, navProperty) => current.Include(navProperty));
 	}

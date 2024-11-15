@@ -15,7 +15,8 @@ internal class FindAllQueryHandler<TEntity, TResult>(IApplicationDbContext dbCon
 	public Task<List<TResult>> Handle(FindAllQuery<TResult> request, CancellationToken cancellationToken)
 	{
 		return dbSet.AsNoTracking()
-			.SorFields(request.Sorting)
+			.SorFields(request.Criteria.Sort)
+			.IncludeMany(request.Criteria.Include)
 			.Select(query => mapper.Map<TResult>(query))
 			// .ProjectTo<TResult>(mapper.ConfigurationProvider)
 			.ToListAsync(cancellationToken);

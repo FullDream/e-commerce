@@ -1,5 +1,8 @@
-﻿using Application.Category.Dto;
+﻿using Api.Mapping;
+using Api.QueryParams;
+using Application.Category.Dto;
 using Application.Common.Commands;
+using Application.Common.Criteria;
 using Application.Common.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,27 +11,28 @@ namespace Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class CategoriesController(IMediator mediator, TypeInspector<CategoryResponse> typeInspector) : ControllerBase
+public class CategoriesController(IMediator mediator) : ControllerBase
 {
 	[HttpGet]
 	public async Task<IActionResult>
-		Index([FromQuery] string[] select,
-			[FromQuery] string[] include,
-			[FromQuery] string[] sort,
+		Index(ListQueryOptions<CategoryResponse> options,
 			CancellationToken cancellationToken)
 	{
-		var sorting = FilterQuery.GetSort<CategoryResponse>(sort);
-
-		var categories = await mediator.Send(new FindAllQuery<CategoryResponse>(select, include, sorting),
+		var categories = await mediator.Send(
+			new FindAllQuery<CategoryResponse>(new ListQueryCriteria { Include = [], Select = [], Sort = [] }),
 			cancellationToken);
 
 		return Ok(categories);
 	}
 
 	[HttpGet("{slug}")]
-	public async Task<IActionResult> FindOne(string slug, CancellationToken cancellationToken)
+	public async Task<IActionResult> FindOne(string slug,
+		[FromQuery] QueryOptions<CategoryResponse> options,
+		[FromServices] IQueryOptionsMapper<CategoryResponse> mapper,
+		CancellationToken cancellationToken)
 	{
-		var category = await mediator.Send(new FindOneQuery<CategoryResponse>(slug), cancellationToken);
+		QueryCriteria criteria = mapper.Map(options);
+		var category = await mediator.Send(new FindOneBySlugQuery<CategoryResponse>(slug, criteria), cancellationToken);
 		return Ok(category);
 	}
 

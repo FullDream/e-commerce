@@ -1,6 +1,8 @@
 using System.Text.Json;
 using Api;
+using Api.Mapping;
 using Api.Routing;
+using Api.Validators;
 using Application;
 using Core.Interfaces;
 using Infrastructure;
@@ -18,6 +20,9 @@ services.AddMappingInfrastructure();
 
 services.AddSingleton(typeof(TypeInspector<>));
 services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+services.AddScoped(typeof(IQueryOptionsValidator<>), typeof(QueryOptionsValidator<>));
+services.AddScoped(typeof(IQueryOptionsMapper<>), typeof(QueryOptionsMapper<>));
+
 
 services.AddApplication();
 
@@ -33,7 +38,6 @@ services.AddControllers(options =>
 
 services.AddAuthorization();
 services.AddSwaggerGen();
-
 
 services.AddIdentityApiEndpoints<IdentityUser>()
 	.AddEntityFrameworkStores<AppDbContext>();

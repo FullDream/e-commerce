@@ -1,7 +1,7 @@
-﻿using Application.Common.Enums;
+﻿using Application.Common.Criteria;
 using MediatR;
 
 namespace Application.Common.Queries;
 
-public record FindAllQuery<TResult>(string[] Select, string[] Include, Dictionary<string, SortOrder> Sorting)
+public record FindAllQuery<TResult>(ListQueryCriteria Criteria)
 	: IRequest<List<TResult>>;
