@@ -20,9 +20,16 @@ public class ProductsController(
 {
 	[HttpGet]
 	public async Task<IActionResult>
-		Index(ListQueryOptions<ProductResponse> options,
-			CancellationToken cancellationToken)
+		Index(
+			ListQueryOptions<ProductResponse> options,
+			[FromServices] IListQueryOptionsValidator<ProductResponse> listQueryValidator,
+			CancellationToken cancellationToken
+		)
 	{
+		var validation = await listQueryValidator.ValidateAsync(options, cancellationToken);
+
+		if (!validation.IsValid) return BadRequest(validation);
+
 		var criteria = queryMapper.Map(options);
 		var categories = await mediator.Send(new FindAllQuery<ProductResponse>(criteria), cancellationToken);
 

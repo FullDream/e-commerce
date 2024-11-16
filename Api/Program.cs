@@ -21,6 +21,8 @@ services.AddMappingInfrastructure();
 services.AddSingleton(typeof(TypeInspector<>));
 services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 services.AddScoped(typeof(IQueryOptionsValidator<>), typeof(QueryOptionsValidator<>));
+services.AddScoped(typeof(IListQueryOptionsValidator<>), typeof(ListQueryOptionsValidator<>));
+
 services.AddScoped(typeof(IQueryOptionsMapper<>), typeof(QueryOptionsMapper<>));
 
 
