@@ -22,11 +22,10 @@ public class ProductsController(
 	public async Task<IActionResult>
 		Index(
 			ListQueryOptions<ProductResponse> options,
-			[FromServices] IListQueryOptionsValidator<ProductResponse> listQueryValidator,
 			CancellationToken cancellationToken
 		)
 	{
-		var validation = await listQueryValidator.ValidateAsync(options, cancellationToken);
+		var validation = await queryValidator.ValidateAsync(options, cancellationToken);
 
 		if (!validation.IsValid) return BadRequest(validation);
 
