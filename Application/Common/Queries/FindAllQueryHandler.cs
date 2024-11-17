@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Common.Extensions;
+using AutoMapper;
 using Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ internal class FindAllQueryHandler<TEntity, TResult>(IApplicationDbContext dbCon
 	public Task<List<TResult>> Handle(FindAllQuery<TResult> request, CancellationToken cancellationToken)
 	{
 		return dbSet.AsNoTracking()
+			.ApplyFilters(request.Criteria.Filters)
 			.SorFields(request.Criteria.Sort)
 			.IncludeMany(request.Criteria.Include)
 			.Select(query => mapper.Map<TResult>(query))

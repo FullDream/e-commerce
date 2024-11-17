@@ -18,8 +18,10 @@ public class CategoriesController(IMediator mediator) : ControllerBase
 		Index(ListQueryOptions<CategoryResponse> options,
 			CancellationToken cancellationToken)
 	{
+		Console.Write(options.Filters);
 		var categories = await mediator.Send(
-			new FindAllQuery<CategoryResponse>(new ListQueryCriteria { Include = [], Select = [], Sort = [] }),
+			new FindAllQuery<CategoryResponse>(new ListQueryCriteria
+				{ Include = [], Select = [], Sort = [], Filters = [] }),
 			cancellationToken);
 
 		return Ok(categories);

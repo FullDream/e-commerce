@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Api;
+using Api.Filters;
 using Api.Mapping;
 using Api.Routing;
 using Api.Validators;
@@ -37,7 +38,7 @@ services.AddControllers(options =>
 	});
 
 services.AddAuthorization();
-services.AddSwaggerGen();
+services.AddSwaggerGen(c => { c.OperationFilter<RemoveFiltersParameterOperationFilter>(); });
 
 services.AddIdentityApiEndpoints<IdentityUser>()
 	.AddEntityFrameworkStores<AppDbContext>();

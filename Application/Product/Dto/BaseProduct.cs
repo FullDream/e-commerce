@@ -1,4 +1,6 @@
-﻿namespace Application.Product.Dto;
+﻿using Core.Entities;
+
+namespace Application.Product.Dto;
 
 public class BaseProduct
 {
@@ -7,5 +9,5 @@ public class BaseProduct
 	public string? Title { get; init; }
 	public string? Description { get; init; }
 
-	// public IReadOnlyCollection<Guid>? Images { get; init; }
+	public IReadOnlyCollection<Image>? Images { get; init; }
 }

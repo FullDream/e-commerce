@@ -1,4 +1,5 @@
 ﻿using Api.QueryParams;
+using Application.Common;
 using Application.Common.Criteria;
 using Application.Common.Enums;
 
@@ -17,7 +18,8 @@ public class QueryOptionsMapper<T>(TypeInspector<T> inspector) : IQueryOptionsMa
 	{
 		Select = ResolveProperties(options.Select, inspector.SimplePropertyNames),
 		Include = ResolveProperties(options.Include, inspector.NavigationPropertyNames),
-		Sort = ParseSort(options.Sort, inspector.SimplePropertyNames)
+		Sort = ParseSort(options.Sort, inspector.SimplePropertyNames),
+		Filters = ParseFilter(options.Filters, inspector.SimplePropertyNames),
 	};
 
 
@@ -35,4 +37,20 @@ public class QueryOptionsMapper<T>(TypeInspector<T> inspector) : IQueryOptionsMa
 			.Select(param => param.Split(':'))
 			.ToDictionary(parts => target.First(k => k.Equals(parts[0], StringComparison.OrdinalIgnoreCase)),
 				parts => Enum.Parse<SortOrder>(parts[1], ignoreCase: true));
+
+
+	private static List<FilterCondition> ParseFilter(Dictionary<string, Dictionary<string, string>> filters,
+		IEnumerable<string> targetProperties)
+	{
+		return filters
+			.SelectMany(filter =>
+				filter.Value.Select(nestedDictionary => new FilterCondition
+				{
+					Property = targetProperties.First(t => t.Equals(filter.Key, StringComparison.OrdinalIgnoreCase)),
+					Value = nestedDictionary.Value,
+					Operator = Enum.Parse<FilterOperator>(nestedDictionary.Key, ignoreCase: true)
+				})
+			)
+			.ToList();
+	}
 }
