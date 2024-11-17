@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Criteria;
+﻿namespace Contracts.Common.Criteria;
 
 public class QueryCriteria
 {

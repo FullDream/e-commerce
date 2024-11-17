@@ -1,4 +1,4 @@
-﻿using Application.Common.Criteria;
+﻿using Contracts.Common.Criteria;
 using MediatR;
 
 namespace Application.Common.Queries;

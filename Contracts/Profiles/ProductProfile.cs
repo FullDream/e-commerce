@@ -1,8 +1,8 @@
-﻿using Application.Product.Dto;
-using AutoMapper;
+﻿using AutoMapper;
+using Contracts.Dto.Product;
 using Core.Entities;
 
-namespace Infrastructure.Mapping;
+namespace Contracts.Profiles;
 
 public class ProductProfile : Profile
 {

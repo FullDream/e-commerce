@@ -1,6 +1,6 @@
-﻿using Application.Product.Dto;
+﻿using Contracts.Dto.Product;
 
-namespace Application.Category.Dto;
+namespace Contracts.Dto.Category;
 
 public class CategoryResponse : BaseCategory
 {

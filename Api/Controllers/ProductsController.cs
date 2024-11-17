@@ -2,9 +2,9 @@
 using Api.QueryParams;
 using Api.Validators;
 using Application.Common.Commands;
-using Application.Common.Criteria;
 using Application.Common.Queries;
-using Application.Product.Dto;
+using Contracts.Common.Criteria;
+using Contracts.Dto.Product;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

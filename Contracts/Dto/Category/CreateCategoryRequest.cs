@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.Category.Dto;
+namespace Contracts.Dto.Category;
 
 public class CreateCategoryRequest
 {

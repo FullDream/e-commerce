@@ -1,6 +1,6 @@
-﻿using Application.Common.Enums;
+﻿using Contracts.Common.Enums;
 
-namespace Application.Common;
+namespace Contracts.Common.Criteria;
 
 public class FilterCondition
 {

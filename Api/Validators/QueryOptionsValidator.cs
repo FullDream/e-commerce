@@ -1,5 +1,5 @@
 ﻿using Api.QueryParams;
-using Application.Common.Enums;
+using Contracts.Common.Enums;
 using FluentValidation;
 
 namespace Api.Validators;

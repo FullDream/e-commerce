@@ -1,4 +1,4 @@
-﻿namespace Application.Product.Dto;
+﻿namespace Contracts.Dto.Product;
 
 public class UpdateProductRequest
 {

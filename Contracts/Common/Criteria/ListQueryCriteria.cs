@@ -1,6 +1,6 @@
-﻿using Application.Common.Enums;
+﻿using Contracts.Common.Enums;
 
-namespace Application.Common.Criteria;
+namespace Contracts.Common.Criteria;
 
 public class ListQueryCriteria : QueryCriteria
 {

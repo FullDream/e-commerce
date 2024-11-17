@@ -1,4 +1,4 @@
-﻿using Application;
+﻿using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,12 +14,6 @@ public static class InfrastructureServiceRegistration
 			options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 		services.AddScoped<IApplicationDbContext>(provider => provider.GetService<AppDbContext>()!);
 
-		return services;
-	}
-
-	public static IServiceCollection AddMappingInfrastructure(this IServiceCollection services)
-	{
-		services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 		return services;
 	}
 }

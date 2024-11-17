@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Enums;
+﻿namespace Contracts.Common.Enums;
 
 public enum FilterOperator
 {

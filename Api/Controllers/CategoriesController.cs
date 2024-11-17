@@ -1,9 +1,9 @@
 ﻿using Api.Mapping;
 using Api.QueryParams;
-using Application.Category.Dto;
 using Application.Common.Commands;
-using Application.Common.Criteria;
 using Application.Common.Queries;
+using Contracts.Common.Criteria;
+using Contracts.Dto.Category;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -5,6 +5,7 @@ using Api.Mapping;
 using Api.Routing;
 using Api.Validators;
 using Application;
+using Contracts;
 using Core.Interfaces;
 using Infrastructure;
 using Infrastructure.Repositories;
@@ -17,7 +18,7 @@ var services = builder.Services;
 
 services.AddEndpointsApiExplorer();
 services.AddDbInfrastructure(builder.Configuration);
-services.AddMappingInfrastructure();
+services.AddContracts();
 
 services.AddSingleton(typeof(TypeInspector<>));
 services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

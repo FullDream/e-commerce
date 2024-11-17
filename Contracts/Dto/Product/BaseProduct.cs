@@ -1,6 +1,6 @@
 ﻿using Core.Entities;
 
-namespace Application.Product.Dto;
+namespace Contracts.Dto.Product;
 
 public class BaseProduct
 {

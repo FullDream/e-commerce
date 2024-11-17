@@ -1,8 +1,8 @@
-﻿using Application.Category.Dto;
-using AutoMapper;
+﻿using AutoMapper;
+using Contracts.Dto.Category;
 using Core.Entities;
 
-namespace Infrastructure.Mapping;
+namespace Contracts.Profiles;
 
 public class CategoryProfile : Profile
 {

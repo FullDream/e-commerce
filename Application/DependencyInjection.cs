@@ -1,7 +1,8 @@
-﻿using Application.Category.Dto;
-using Application.Common.Commands;
+﻿using Application.Common.Commands;
 using Application.Common.Queries;
-using Application.Product.Dto;
+using Contracts.Dto.Category;
+using Contracts.Dto.Product;
+using Core.Entities;
 using Core.Interfaces;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,11 +15,11 @@ public static class DependencyInjection
 	{
 		services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
 
-		services.AddQueries<Core.Entities.Category, CategoryResponse>();
-		services.AddCommands<Core.Entities.Category, CategoryResponse, CreateCategoryRequest, UpdateCategoryRequest>();
+		services.AddQueries<Category, CategoryResponse>();
+		services.AddCommands<Category, CategoryResponse, CreateCategoryRequest, UpdateCategoryRequest>();
 
-		services.AddQueries<Core.Entities.Product, ProductResponse>();
-		services.AddCommands<Core.Entities.Product, ProductResponse, CreateProductRequest, UpdateProductRequest>();
+		services.AddQueries<Product, ProductResponse>();
+		services.AddCommands<Product, ProductResponse, CreateProductRequest, UpdateProductRequest>();
 
 		return services;
 	}

@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
-using Application.Common.Enums;
+using Contracts.Common.Criteria;
+using Contracts.Common.Enums;
 
 namespace Application.Common.Extensions;
 

@@ -1,5 +1,5 @@
 ﻿using Api.QueryParams;
-using Application.Common.Criteria;
+using Contracts.Common.Criteria;
 
 namespace Api.Mapping;
 

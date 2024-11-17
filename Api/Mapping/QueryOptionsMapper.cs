@@ -1,7 +1,6 @@
 ﻿using Api.QueryParams;
-using Application.Common;
-using Application.Common.Criteria;
-using Application.Common.Enums;
+using Contracts.Common.Criteria;
+using Contracts.Common.Enums;
 
 namespace Api.Mapping;
 
